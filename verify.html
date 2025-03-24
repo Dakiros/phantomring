@@ -45,7 +45,7 @@
     const params = new URLSearchParams(location.search);
     const user = params.get('user');
     const authResult = document.getElementById('authResult');
-    
+
     const profiles = {
       "ZIX-013": {
         name: "ZIX-013",
@@ -71,11 +71,14 @@
     };
 
     if (user && profiles[user]) {
-      const profile = profiles[user];
-      authResult.innerHTML = `✅ ${profile.name} 인증 완료!<br>Level: ${profile.level}, 피어싱 수: ${profile.piercings}, 팬티 코드: ${profile.panty}`;
+      resultBox.innerHTML = `✅ 인증 성공: ${user}`;
+      setTimeout(() => {
+        window.location.href = `profile-${user}.html`;
+      }, 2000);
     } else {
-      authResult.innerHTML = `❌ 인증 실패: 잘못된 요청`;
+      resultBox.innerHTML = `❌ 인증 실패: 잘못된 요청`;
     }
+
   </script>
 </body>
 
