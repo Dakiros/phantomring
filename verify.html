@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>PRX-Net :: 인증 확인</title>
+  <style>
+    body {
+      background: #000;
+      color: #00ffee;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .box {
+      border: 2px solid #00ffee;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 360px;
+    }
+    h1 {
+      color: #ff007f;
+    }
+    .auth-result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🔐 QR 인증 시스템</h1>
+    <div class="auth-result" id="authResult">인증 처리 중...</div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const token = params.get('token');
+    const user = params.get('user');
+
+    const authResult = document.getElementById('authResult');
+
+    // 시뮬레이션용 인증 조건
+    if (token && user) {
+      setTimeout(() => {
+        authResult.innerHTML = `✅ ${user} 인증 완료<br>접속이 허용되었습니다.`;
+        // 추후 리디렉션 가능: location.href = '/profile/' + user;
+      }, 1200);
+    } else {
+      authResult.innerHTML = `❌ 인증 실패<br>QR 정보가 유효하지 않습니다.`;
+    }
+  </script>
+</body>
+</html>

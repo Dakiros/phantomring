@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phantom Ring :: PRX-Net</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      padding: 1.2rem 2rem;
+      background: #111;
+      border-bottom: 1px solid #00ffee66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: #ff007f;
+      font-size: 1.5rem;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #00ffee;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      animation: cyber-flicker 2s infinite alternate;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #88ffff;
+    }
+
+    @keyframes cyber-flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.8; filter: drop-shadow(0 0 4px #00ffee); }
+    }
+
+    .qr-section {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .qr-section img {
+      width: 140px;
+      height: 140px;
+      border: 2px solid #00ffee;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      background: #111;
+    }
+
+    .btn-scan {
+      background: #00ffee22;
+      border: 1px solid #00ffee;
+      color: #00ffee;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    .btn-scan:hover {
+      background: #00ffee44;
+    }
+
+    .footer {
+      margin-top: 4rem;
+      font-size: 0.85rem;
+      color: #00ffee88;
+    }
+
+    .panty-grid {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .panty-box {
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      border: 2px solid #00ffee;
+      border-radius: 0.5rem;
+      position: relative;
+      transition: transform 0.3s;
+    }
+
+    .panty-box:hover {
+      transform: scale(1.25);
+      z-index: 10;
+    }
+
+    .panty-box::after {
+      content: attr(data-code);
+      position: absolute;
+      bottom: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: #00ffee;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .panty-box:hover::after {
+      opacity: 1;
+    }
+
+    .profile-card {
+      border: 2px solid #00ffee;
+      padding: 1rem;
+      margin-top: 2rem;
+      width: 320px;
+      border-radius: 1rem;
+      background: #111;
+    }
+
+    .profile-photo {
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>PHANTOM RING</h1>
+    <nav>
+      <a href="#">HOME</a>
+      <a href="#" onclick="generateProfile('ZIX-013')">PROFILE</a>
+      <a href="#">OPERATIONS</a>
+      <a href="#">RELICS</a>
+      <a href="#">SECURE</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>🔒 PRX-Net 보안 시스템</h2>
+    <p>접속 시도 감지됨. 권한 레벨을 확인 중입니다...</p>
+    <button class="btn-scan" onclick="requestQR(); speak('QR 코드가 생성되었습니다.')">지문 인증 & QR 접속</button>
+  </section>
+
+  <section class="qr-section" id="qrZone" style="display: none;">
+    <h3>당신의 접속 코드는 다음과 같습니다:</h3>
+    <img id="qrCode" src="" alt="QR Code" />
+  </section>
+
+  <section id="profileOutput"></section>
+
+  <section id="command-board">
+    <h2>📌 리더 명령 게시판</h2>
+    <ul id="commands">
+      <li>🕶️ [ZIX] 02-B 벙커 감시 강화</li>
+      <li>🌫️ [KRII] 외곽 출입 경로 폐쇄</li>
+      <li>🔥 [NTEK] 열반응 수신기 점검</li>
+    </ul>
+    <input id="newCommand" placeholder="새 명령 입력..." />
+    <button onclick="addCommand()">추가</button>
+  </section>
+
+  <section id="panty-wall">
+    <h2>🩲 팬티 전시 벽</h2>
+    <div class="panty-grid">
+      <div class="panty-box" data-code="𝙿𝚁-𝚂𝚃𝚁𝙸𝙿3" style="background-image: url('panty1.png')"></div>
+      <div class="panty-box" data-code="𝙿𝚁-𝙺𝚁𝙸𝙻𝚂2" style="background-image: url('panty2.png')"></div>
+      <div class="panty-box" data-code="𝙿𝚁-𝙽𝚃𝙴𝙺𝟺𝙳" style="background-image: url('panty3.png')"></div>
+    </div>
+  </section>
+
+  <div class="footer">
+    &copy; 2025 Phantom Ring Network. Unauthorized access will be logged.
+  </div>
+
+  <script>
+    function requestQR() {
+      const qrZone = document.getElementById('qrZone');
+      const qrCode = document.getElementById('qrCode');
+      const authToken = btoa(Date.now().toString()); // 간단한 토큰 생성
+      const profileURL = `https://phantomring.net/verify?token=${authToken}&user=ZIX-013`;
+      qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(profileURL)}`;
+      qrZone.style.display = 'block';
+      console.log("QR 인증 URL:", profileURL);
+    }
+
+    function checkAccess(qrCode) {
+      const levelMap = {
+        "ZIX-013": 3,
+        "KRII-022": 2,
+        "NTEK-041": 4
+      };
+      const code = qrCode.split('/').pop();
+      return levelMap[code] || 0;
+    }
+
+    function addCommand() {
+      const input = document.getElementById("newCommand");
+      const cmd = input.value.trim();
+      if (cmd) {
+        const ul = document.getElementById("commands");
+        const li = document.createElement("li");
+        li.textContent = cmd;
+        ul.appendChild(li);
+        input.value = "";
+      }
+    }
+
+    function generateProfile(code) {
+      const profiles = {
+        "ZIX-013": {
+          photo: "zix.png",
+          name: "ZIX-013",
+          code: "ZIX-013",
+          level: 3,
+          piercings: 5,
+          panty: "𝙿𝚁-𝚂𝚃𝚁𝙸𝙿3",
+          team: "Phantom Ring HQ"
+        }
+      };
+      const data = profiles[code];
+      const html = `
+        <div class="profile-card">
+          <div class="profile-photo" style="background-image: url('${data.photo}')"></div>
+          <h3>${data.name}</h3>
+          <p><strong>코드명:</strong> ${data.code}</p>
+          <p><strong>등급:</strong> Level ${data.level}</p>
+          <p><strong>피어싱 수:</strong> ${data.piercings}개</p>
+          <p><strong>팬티 코드:</strong> ${data.panty}</p>
+          <p><strong>소속:</strong> ${data.team}</p>
+        </div>
+      `;
+      document.getElementById("profileOutput").innerHTML = html;
+      speak(`${data.name} 프로필을 불러왔습니다.`);
+    }
+
+    function speak(message) {
+      const synth = window.speechSynthesis;
+      const utter = new SpeechSynthesisUtterance(message);
+      utter.lang = "ko-KR";
+      synth.speak(utter);
+    }
+  </script>
+</body>
+
+</html>
