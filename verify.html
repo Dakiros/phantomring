@@ -2,7 +2,7 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>PRX-Net :: 인증 확인</title>
   <style>
     body {
@@ -44,21 +44,39 @@
   <script>
     const params = new URLSearchParams(location.search);
     const user = params.get('user');
-    const authResult = document.getElementById('authResult');  // 수정된 부분
+    const authResult = document.getElementById('authResult');
     
     const profiles = {
-      "ZIX-013": "ZIX-013의 프로필 정보",
-      "KRII-022": "KRII-022의 프로필 정보",
-      "NTEK-041": "NTEK-041의 프로필 정보"
+      "ZIX-013": {
+        name: "ZIX-013",
+        level: 3,
+        piercings: 5,
+        panty: "𝙿𝚁-𝚂𝚃𝚁𝙸𝙿3",
+        team: "Phantom Ring HQ"
+      },
+      "KRII-022": {
+        name: "KRII-022",
+        level: 2,
+        piercings: 3,
+        panty: "𝙿𝚁-𝙺𝚁𝙸𝙻𝚂2",
+        team: "Phantom Ring Subnode"
+      },
+      "NTEK-041": {
+        name: "NTEK-041",
+        level: 4,
+        piercings: 6,
+        panty: "𝙿𝚁-𝙽𝚃𝙴𝙺𝟺𝙳",
+        team: "Phantom Ring East Hub"
+      }
     };
-  
+
     if (user && profiles[user]) {
-      authResult.innerHTML = `✅ ${user} 인증 완료되었습니다!`;  // 수정된 부분
+      const profile = profiles[user];
+      authResult.innerHTML = `✅ ${profile.name} 인증 완료!<br>Level: ${profile.level}, 피어싱 수: ${profile.piercings}, 팬티 코드: ${profile.panty}`;
     } else {
-      authResult.innerHTML = `❌ 인증 실패: 잘못된 요청`;  // 수정된 부분
+      authResult.innerHTML = `❌ 인증 실패: 잘못된 요청`;
     }
   </script>
-  
 </body>
 
 </html>
