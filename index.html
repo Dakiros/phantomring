@@ -132,7 +132,7 @@
       const qrCode = document.getElementById('qrCode');
       const user = prompt("인증할 사용자 코드 입력 (예: ZIX-013, KRII-022, NTEK-041):");  // 사용자 코드 입력 받기
       if (user) {
-        const profileURL = `https://yourusername.github.io/phantomring/verify.html?user=${user}`;
+        const profileURL = `https://dakiros.github.io/phantomring/verify.html?user=${user}`;
         qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(profileURL)}`;
         qrZone.style.display = 'block';
         console.log("QR 인증 URL:", profileURL);
