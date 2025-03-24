@@ -71,10 +71,18 @@
     };
 
     if (user && profiles[user]) {
-      resultBox.innerHTML = `✅ 인증 성공: ${user}`;
+      const p = profiles[user];
+      resultBox.innerHTML = `
+      <h2>🔐 QR 인증 시스템</h2>
+      <p>✅ ${user} 인증 완료!</p>
+      <p>Level: ${p.level}, 피어싱 수: ${p.piercings}, 팬티 코드: ${p.panty}</p>
+      <button onclick="window.location.href='profile-${user}.html'" style="margin-top:1rem;padding:0.6rem 1.2rem;background:#00ffee22;border:1px solid #00ffee;border-radius:0.5rem;color:#00ffee;">➡ 프로필 열기</button>
+    `;
+
+      // 리다이렉트도 시도 (모바일 호환용)
       setTimeout(() => {
         window.location.href = `profile-${user}.html`;
-      }, 2000);
+      }, 3000);
     } else {
       resultBox.innerHTML = `❌ 인증 실패: 잘못된 요청`;
     }
