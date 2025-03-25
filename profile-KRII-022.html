@@ -6,8 +6,8 @@
     <title>KRII-022 :: 프로필</title>
     <style>
         body {
-            background: #000;
-            color: #00ffee;
+            background: linear-gradient(135deg, #0a001a, #000);
+            color: #88ddff;
             font-family: 'Orbitron', sans-serif;
             text-align: center;
             padding: 2rem;
@@ -17,29 +17,36 @@
         }
 
         h1 {
-            color: #ff007f;
+            color: #8899ff;
         }
 
         .profile-card {
             margin: 0 auto;
-            border: 2px solid #00ffee;
+            border: 2px solid #88ddff;
             padding: 2rem;
             width: 80%;
             max-width: 500px;
-            background: rgba(17, 17, 17, 0.9);
+            background: rgba(15, 15, 30, 0.95);
             border-radius: 1rem;
-            box-shadow: 0 0 20px #00ffee44;
+            box-shadow: 0 0 25px #88ddff55;
             animation: slideUp 0.8s ease-out;
             position: relative;
             z-index: 2;
         }
 
         .profile-photo {
-            background: url('krii.png') center center / cover;
-            height: 200px;
+            background: none;
+            height: auto;
             width: 100%;
             border-radius: 0.5rem;
             animation: glow 2s infinite alternate;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 10px #88ddff99;
         }
 
         .hud-overlay {
@@ -48,8 +55,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-radial-gradient(circle at center, rgba(0, 255, 255, 0.06) 1px, transparent 3px);
-            animation: scanMove 6s linear infinite;
+            background: repeating-linear-gradient(-45deg, rgba(136, 221, 255, 0.08) 1px, transparent 4px);
+            animation: scanMove 5s linear infinite;
             pointer-events: none;
             z-index: 1;
         }
@@ -58,7 +65,6 @@
             from {
                 opacity: 0;
             }
-
             to {
                 opacity: 1;
             }
@@ -69,7 +75,6 @@
                 transform: translateY(30px);
                 opacity: 0;
             }
-
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -78,11 +83,10 @@
 
         @keyframes glow {
             from {
-                box-shadow: 0 0 5px #00ffee55;
+                box-shadow: 0 0 5px #88ddff55;
             }
-
             to {
-                box-shadow: 0 0 20px #00ffeecc;
+                box-shadow: 0 0 20px #88ddffff;
             }
         }
 
@@ -90,9 +94,8 @@
             0% {
                 background-position: 0 0;
             }
-
             100% {
-                background-position: 100px 100px;
+                background-position: 80px 80px;
             }
         }
     </style>
@@ -101,14 +104,12 @@
 <body>
     <div class="hud-overlay"></div>
     <audio src="cyber-bg.mp3" autoplay loop></audio>
-    
-
-  
-
 
     <h1>KRII-022 프로필</h1>
     <div class="profile-card">
-        <div class="profile-photo"></div>
+        <div class="profile-photo">
+            <img src="krii.png" alt="KRII-022 프로필 이미지">
+        </div>
         <h3>KRII-022</h3>
         <p>등급: Level 2</p>
         <p>피어싱: 3개</p>
@@ -119,10 +120,13 @@
 
         <script>
             const kriiVoice = new Audio("krii.mp3");
-            document.getElementById("playVoiceBtn").addEventListener("click", () => {
-              kriiVoice.play();
+            window.addEventListener("DOMContentLoaded", () => {
+                kriiVoice.play();
             });
-          </script>
+            document.getElementById("playVoiceBtn").addEventListener("click", () => {
+                kriiVoice.play();
+            });
+        </script>
 
     </div>
 </body>
