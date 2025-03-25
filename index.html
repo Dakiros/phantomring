@@ -27,6 +27,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
 
     header h1 {
@@ -39,6 +40,15 @@
       text-decoration: none;
       color: #00ffee;
       font-weight: bold;
+    }
+
+    .user-status {
+      position: absolute;
+      top: 1.2rem;
+      right: 2rem;
+      color: #00ffeeaa;
+      font-size: 0.9rem;
+      text-align: right;
     }
 
     .hero {
@@ -109,6 +119,7 @@
       <a href="#">RELICS</a>
       <a href="#">SECURE</a>
     </nav>
+    <div class="user-status" id="userStatus">🔓 비로그인 상태</div>
   </header>
 
   <section class="hero">
@@ -122,23 +133,64 @@
     <img id="qrCode" src="" alt="QR Code" />
   </section>
 
+  <section class="qr-section" id="loginStatus" style="display: none;">
+    <h3 style="color: #00ff88;">✅ 로그인 성공</h3>
+    <p>세션이 인증되었습니다. 권한 레벨: <span id="userLevel">USER</span></p>
+    <button class="btn-scan" onclick="logout(); speak('로그아웃 되었습니다.')">로그아웃</button>
+  </section>
+
   <div class="footer">
     &copy; 2025 Phantom Ring Network. Unauthorized access will be logged.
   </div>
 
   <script>
+    let loginToken = null;
+
     function requestQR() {
       const qrZone = document.getElementById('qrZone');
       const qrCode = document.getElementById('qrCode');
-      const user = prompt("인증할 사용자 코드 입력 (예: ZIX-013, KRII-022, NTEK-041):");  // 사용자 코드 입력 받기
+      const loginStatus = document.getElementById('loginStatus');
+
+      const user = prompt("인증할 사용자 코드 입력 (예: ZIX-013, KRII-022, NTEK-041):");
       if (user) {
-        const profileURL = `https://dakiros.github.io/phantomring/verify.html?user=${user}`;
+        const token = Math.random().toString(36).substring(2);
+        loginToken = token;
+
+        const profileURL = `${location.origin}${location.pathname.replace("index.html", "verify.html")}?user=${user}&token=${token}`;
         qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(profileURL)}`;
         qrZone.style.display = 'block';
+        loginStatus.style.display = 'none';
+
         console.log("QR 인증 URL:", profileURL);
       } else {
         alert("사용자 코드가 입력되지 않았습니다.");
       }
+    }
+
+    // QR 인증 성공 후 verify.html이 이 함수 호출함
+    function acceptLogin(userCode) {
+      const loginStatus = document.getElementById('loginStatus');
+      const qrZone = document.getElementById('qrZone');
+      const userLevel = document.getElementById('userLevel');
+      const userStatus = document.getElementById('userStatus');
+
+      qrZone.style.display = 'none';
+      loginStatus.style.display = 'block';
+      userLevel.textContent = userCode.includes('ZIX') ? "ADMIN" : "USER";
+      userStatus.textContent = `🔐 ${userCode} 로그인됨`;
+
+      speak(`${userCode} 님, 로그인 되었습니다.`);
+      console.log(`사용자 ${userCode} 로그인 완료`);
+    }
+
+    function logout() {
+      const loginStatus = document.getElementById('loginStatus');
+      const userStatus = document.getElementById('userStatus');
+      loginStatus.style.display = 'none';
+      loginToken = null;
+      userStatus.textContent = "🔓 비로그인 상태";
+      speak("로그아웃 되었습니다.");
+      console.log("로그아웃 완료");
     }
 
     function speak(message) {
@@ -147,6 +199,14 @@
       utter.lang = "ko-KR";
       synth.speak(utter);
     }
+
+    // QR 인증 확인용 자동 로그인 수신 (예: verify.html에서 window.opener.acceptLogin(user);)
+    window.addEventListener("message", (event) => {
+      if (typeof event.data === "string" && event.data.startsWith("login:")) {
+        const userCode = event.data.replace("login:", "");
+        acceptLogin(userCode);
+      }
+    });
   </script>
 </body>
 
