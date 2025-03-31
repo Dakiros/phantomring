@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>🩲 팬티 보관함</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #ff66cc;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #ff66cc, 0 0 20px #00f9ff;
+    }
+
+    .filter-bar {
+      margin-bottom: 30px;
+    }
+
+    select, input[type="text"] {
+      padding: 10px;
+      margin: 0 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 2px solid #00f9ff;
+      background: #121212;
+      color: #fff;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .panty-card {
+      background: linear-gradient(145deg, #1b1b1b, #232323);
+      border: 2px solid #ff66cc;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 102, 204, 0.4);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .panty-card:hover {
+      background: #ff66cc;
+      color: #000;
+      transform: scale(1.03) rotate(-1deg);
+      box-shadow: 0 0 20px #ff66cc;
+    }
+
+    .panty-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background-color: #111;
+      padding: 5px;
+    }
+
+    .panty-card h3 {
+      font-size: 1.4rem;
+      color: #00ffe1;
+      margin: 10px 0 6px;
+    }
+
+    .panty-card p {
+      font-size: 0.9rem;
+      margin: 3px 0;
+    }
+
+    .bar {
+      height: 10px;
+      background: linear-gradient(90deg, #00f9ff, #ff66cc);
+      margin-top: 4px;
+      border-radius: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      background: #00f9ff;
+      color: #000;
+      border-radius: 999px;
+      font-weight: bold;
+    }
+
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1a1a1a;
+      border: 2px solid #00f9ff;
+      padding: 30px;
+      border-radius: 12px;
+      display: none;
+      z-index: 999;
+      width: 350px;
+      color: #fff;
+      box-shadow: 0 0 20px #00f9ff;
+      text-align: left;
+    }
+
+    #popup h2 {
+      margin-top: 0;
+      color: #00f9ff;
+    }
+
+    #popup button {
+      margin-top: 15px;
+      padding: 8px 16px;
+      border: none;
+      background: #00f9ff;
+      color: #000;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🩲 팬티 보관함</h1>
+
+  <div class="filter-bar">
+    <input type="text" id="searchInput" placeholder="드래곤/색상/스타일 검색..." onkeyup="filterCards()">
+    <select id="styleFilter" onchange="filterCards()">
+      <option value="">팬티 스타일</option>
+      <option value="메쉬 하이컷">메쉬 하이컷</option>
+      <option value="스피드 트렁크">스피드 트렁크</option>
+      <option value="전투형 하이브리드">전투형 하이브리드</option>
+    </select>
+    <select id="scentFilter" onchange="filterCards()">
+      <option value="">냄새</option>
+      <option value="민트">민트</option>
+      <option value="열기">열기</option>
+      <option value="금속">금속</option>
+      <option value="스파이스">스파이스</option>
+    </select>
+    <select id="materialFilter" onchange="filterCards()">
+      <option value="">재질</option>
+      <option value="고무">고무</option>
+      <option value="합성섬유">합성섬유</option>
+      <option value="고대룡가죽">고대룡가죽</option>
+    </select>
+    <select id="symbolFilter" onchange="filterCards()">
+      <option value="">속성</option>
+      <option value="🔥">🔥 불</option>
+      <option value="❄️">❄️ 얼음</option>
+      <option value="⚡">⚡ 전기</option>
+    </select>
+  </div>
+
+  <div class="card-container" id="cardContainer"></div>
+
+  <div id="popup">
+    <h2 id="popupName"></h2>
+    <p id="popupDetails"></p>
+    <button onclick="closePopup()">닫기</button>
+  </div>
+
+  <script>
+    const dragons = [
+      {
+        name: "ZIX",
+        img: "ZIX.png",
+        color: "붉은 네온",
+        style: "메쉬 하이컷",
+        special: "발광섬유 + 열 반응",
+        power: 92,
+        energy: "★★★☆☆",
+        scent: "강한 열기 + 스파이스향",
+        scentType: ["열기", "스파이스"],
+        material: "고무",
+        symbol: "🔥"
+      },
+      {
+        name: "KRII",
+        img: "KRII.png",
+        color: "에메랄드 민트",
+        style: "스피드 트렁크",
+        special: "냉기 차단 + 신축성",
+        power: 78,
+        energy: "★★★★★",
+        scent: "민트 + 장난기",
+        scentType: ["민트"],
+        material: "합성섬유",
+        symbol: "❄️"
+      },
+      {
+        name: "N-TEK",
+        img: "N-Tek.png",
+        color: "검정 + 바이올렛",
+        style: "전투형 하이브리드",
+        special: "진동 반응 + 음향 내장",
+        power: 88,
+        energy: "★★★★☆",
+        scent: "바이브 + 금속향",
+        scentType: ["금속"],
+        material: "고대룡가죽",
+        symbol: "⚡"
+      }
+    ];
+
+    const container = document.getElementById("cardContainer");
+
+    function renderCards() {
+      container.innerHTML = "";
+      dragons.forEach((d) => {
+        const card = document.createElement("div");
+        card.className = "panty-card";
+        card.innerHTML = `
+          <img src="${d.img}" alt="${d.name}" />
+          <h3>${d.name}</h3>
+          <span class="badge">${d.symbol}</span>
+          <p><strong>색상:</strong> ${d.color}</p>
+          <p><strong>스타일:</strong> ${d.style}</p>
+          <p><strong>재질:</strong> ${d.material}</p>
+          <p><strong>특징:</strong> ${d.special}</p>
+          <p><strong>능력치:</strong> ${d.power}</p>
+          <div class="bar" style="width: ${d.power}%;"></div>
+        `;
+        card.onclick = () => openPopup(d);
+        container.appendChild(card);
+      });
+    }
+
+    function filterCards() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      const styleFilter = document.getElementById("styleFilter").value;
+      const scentFilter = document.getElementById("scentFilter").value;
+      const materialFilter = document.getElementById("materialFilter").value;
+      const symbolFilter = document.getElementById("symbolFilter").value;
+      const cards = document.querySelectorAll(".panty-card");
+
+      dragons.forEach((d, i) => {
+        const card = cards[i];
+        const fullText = `${d.name} ${d.color} ${d.style} ${d.material} ${d.special} ${d.scent}`.toLowerCase();
+        const matchesKeyword = fullText.includes(keyword);
+        const matchesStyle = !styleFilter || d.style.includes(styleFilter);
+        const matchesScent = !scentFilter || d.scentType.includes(scentFilter);
+        const matchesMaterial = !materialFilter || d.material === materialFilter;
+        const matchesSymbol = !symbolFilter || d.symbol === symbolFilter;
+        card.style.display = (matchesKeyword && matchesStyle && matchesScent && matchesMaterial && matchesSymbol) ? "block" : "none";
+      });
+    }
+
+    function openPopup(d) {
+      document.getElementById("popupName").textContent = d.name;
+      document.getElementById("popupDetails").innerHTML = `
+        <strong>색상:</strong> ${d.color}<br>
+        <strong>스타일:</strong> ${d.style}<br>
+        <strong>재질:</strong> ${d.material}<br>
+        <strong>특징:</strong> ${d.special}<br>
+        <strong>능력치:</strong> ${d.power}<br>
+        <strong>에너지:</strong> ${d.energy}<br>
+        <strong>냄새:</strong> ${d.scent}<br>
+        <strong>속성:</strong> ${d.symbol}<br>
+      `;
+      document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    renderCards();
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CODE-FRAGMENT 클럽</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #000;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        canvas#bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .poster-section {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 30px;
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 0 20px #7f00ff, 0 0 40px #00f9ff;
+            animation: neon-pulse 3s infinite alternate;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes neon-pulse {
+            0% {
+                box-shadow: 0 0 15px #7f00ff, 0 0 30px #00f9ff;
+            }
+
+            100% {
+                box-shadow: 0 0 25px #ff00c8, 0 0 60px #00ffe1;
+            }
+        }
+
+        .poster-slider {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .poster-section h1 {
+            font-size: 3rem;
+            color: #00ffe1;
+        }
+
+        .poster-section p {
+            font-size: 1.2rem;
+            color: #ff66cc;
+        }
+
+        .tagline {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #00f9ff;
+            margin-top: 1rem;
+        }
+
+        .glow-btn {
+            margin-top: 30px;
+            padding: 14px 30px;
+            background-color: transparent;
+            border: 2px solid #00f9ff;
+            border-radius: 8px;
+            color: #00f9ff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 8px #00f9ff;
+        }
+
+        .glow-btn:hover {
+            background-color: #00f9ff;
+            color: #0d0d0d;
+            box-shadow: 0 0 20px #00f9ff, 0 0 30px #7f00ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🎵 배경 음악 -->
+    <audio autoplay loop>
+        <source src="「デジモンゴーストゲーム」オープニング映像（曲・FACTION）.mp3" type="audio/mp3">
+        브라우저가 오디오를 지원하지 않습니다.
+    </audio>
+
+    <!-- 🌌 파티클 배경 -->
+    <canvas id="bg"></canvas>
+
+    <div class="poster-section">
+        <img id="poster" class="poster-slider" src="poster1.png" alt="클럽 포스터" />
+        <h1>CODE-FRAGMENT</h1>
+        <p>맨발로 시작되는 자유의 파편</p>
+        <p>드래곤 전용 / 팬티 외 착용 금지 / 피어싱 인증금 필수</p>
+        <p class="tagline">👉 지금, 규칙 바깥으로 걸어와</p>
+        <button class="glow-btn" onclick="requestPassword()">입장하기</button>
+    </div>
+
+    <script>
+        // 🎞️ 슬라이드 페이드
+        const posters = ["poster1.png", "poster2.png", "poster3.png"];
+        let index = 0;
+        const poster = document.getElementById("poster");
+
+        setInterval(() => {
+            poster.style.opacity = 0;
+            setTimeout(() => {
+                index = (index + 1) % posters.length;
+                poster.src = posters[index];
+                poster.style.opacity = 1;
+            }, 1000);
+        }, 5000);
+
+        // 🔒 비밀번호 입력
+        function requestPassword() {
+            const password = prompt("🔐 클럽 입장 비밀번호를 입력하세요:");
+            if (password === "dragon2025") {
+                setTimeout(() => {
+                    location.href = "club-entry.html";
+                }, 100);
+            } else {
+                alert("❌ 비밀번호가 틀렸습니다.");
+            }
+        }
+
+
+        // 🌌 파티클 배경
+        const canvas = document.getElementById("bg");
+        const ctx = canvas.getContext("2d");
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+
+        const particles = Array.from({ length: 80 }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 2 + 1,
+            dx: (Math.random() - 0.5) * 0.5,
+            dy: (Math.random() - 0.5) * 0.5
+        }));
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = "rgba(0,255,255,0.7)";
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+                p.x += p.dx;
+                p.y += p.dy;
+
+                if (p.x < 0 || p.x > w) p.dx *= -1;
+                if (p.y < 0 || p.y > h) p.dy *= -1;
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", () => {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        });
+
+        animate();
+    </script>
+</body>
+
+</html>

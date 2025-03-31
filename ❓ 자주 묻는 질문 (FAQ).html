@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>❓ 자주 묻는 질문 (FAQ)</title>
+    <style>
+        body {
+            background: #000014;
+            color: #00ffee;
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h2 {
+            color: #00ffee;
+            margin-top: 2rem;
+        }
+
+        section {
+            border: 2px solid #00ffee;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <section style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h2>❓ 자주 묻는 질문 (FAQ)</h2>
+        <ul>
+            <li><strong>Q:</strong> Phantom Ring은 누구나 가입할 수 있나요?<br><strong>A:</strong> 아니요, 초대된 멤버만 가입 가능합니다.</li>
+            <li><strong>Q:</strong> 클럽의 주요 활동은 무엇인가요?<br><strong>A:</strong> 정보 보호, 사이버 전쟁 대응, 보안 시스템 개발 등입니다.</li>
+            <li><strong>Q:</strong> 클럽에 연락하려면?<br><strong>A:</strong> 별도의 접속 포털을 통해서만 가능합니다.</li>
+        </ul>
+    </section>
+
+
+    <script>
+        const commandForm = document.getElementById("commandForm");
+        const commandInput = document.getElementById("leaderCommand");
+        const commandOutput = document.getElementById("commandOutput");
+
+        commandForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const command = commandInput.value.trim();
+            if (command) {
+                commandOutput.innerText = `📡 실시간 명령 실행됨: “${command}”`;
+                document.body.style.boxShadow = "inset 0 0 100px #ff00cc55";
+                setTimeout(() => {
+                    document.body.style.boxShadow = "none";
+                }, 1500);
+                commandInput.value = "";
+            }
+        });
+    </script>
+</body>
+
+</html>

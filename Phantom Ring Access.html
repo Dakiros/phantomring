@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phantom Ring Access</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      animation: neonGlow 2s infinite alternate;
+    }
+
+    p {
+      color: #bbb;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .enter-button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: #00ffee;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .enter-button:hover {
+      transform: scale(1.1);
+      background: #00ffff;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes neonGlow {
+      from {
+        text-shadow: 0 0 10px #00ffff;
+      }
+
+      to {
+        text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>✅ ACCESS GRANTED</h1>
+  <p>Phantom Ring welcomes you into the shadows.</p>
+  <button class="enter-button" onclick="window.location.href='main.html'">Enter the Club</button>
+  <div
+    style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; background: #101010; border: 2px solid #00ffee; border-radius: 1rem; padding: 1rem; box-shadow: 0 0 15px #00ffff; display: flex; flex-direction: column; align-items: center;">
+    <h3 style="margin: 0 0 0.5rem 0; color: #00ffee; text-shadow: 0 0 10px #00ffff; font-size: 1rem;">📻 F.R.N Radio
+    </h3>
+    <audio controls style="width: 200px;">
+      <source src="https://phantomring.net/audio/freedom-glow.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  <div
+    style="position: fixed; top: 2rem; left: 2rem; z-index: 9998; background: #101010; border: 2px solid #ff62a5; border-radius: 1rem; padding: 1rem; box-shadow: 0 0 15px #ff62a5; max-width: 300px;">
+    <h3 style="color: #ff62a5; margin-top: 0;">🩳 팬티 전시 수정</h3>
+    <input type="text" id="pantyName" placeholder="코드명 입력" style="width: 100%; margin-bottom: 0.5rem;" />
+    <button onclick="addPanty()"
+      style="background:#ff62a5; color:black; border:none; padding:0.5rem; width:100%; cursor:pointer;">전시 추가</button>
+    <ul id="pantyWall" style="margin-top:1rem; padding-left:1rem; color:#fff; font-size:0.9rem;"></ul>
+  </div>
+
+  <div
+    style="position: fixed; top: 2rem; right: 2rem; z-index: 9998; background: #101010; border: 2px solid #00ffee; border-radius: 1rem; padding: 1rem; box-shadow: 0 0 15px #00ffee; max-width: 300px; color: #00ffee;">
+    <h3 style="margin:0 0 0.5rem 0;">📅 F.R.N 방송 스케줄</h3>
+    <p><strong>21:00</strong> - Zix의 Code Clash</p>
+    <p><strong>22:00</strong> - Krii의 감정쇼크</p>
+    <p><strong>23:00</strong> - N-Tek의 침묵의 신호</p>
+    <h4 style="margin-top:1rem;">🎙️ DJ 소개</h4>
+    <ul style="padding-left:1rem;">
+      <li><strong>Zix</strong>: 전략 방송 / 정적 분위기</li>
+      <li><strong>Krii</strong>: 감정 폭발 / 이벤트형 진행</li>
+      <li><strong>N-Tek</strong>: 기술 정보 / 해킹풍 효과음</li>
+    </ul>
+  </div>
+
+  <script>
+    // 팬티 전시 추가 기능
+    function addPanty() {
+      const input = document.getElementById('pantyName');
+      const list = document.getElementById('pantyWall');
+      const name = input.value.trim();
+      if (name) {
+        const item = document.createElement('li');
+        item.textContent = '🩳 ' + name;
+        list.appendChild(item);
+        input.value = '';
+      }
+    }
+
+    // 라디오 자동 재생 시도 (주의: 일부 브라우저 제한)
+    window.addEventListener('load', () => {
+      const audio = document.querySelector('audio');
+      if (audio) {
+        audio.volume = 0.5;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(e => console.log("자동 재생 차단됨"));
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

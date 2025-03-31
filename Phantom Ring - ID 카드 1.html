@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Phantom Ring 디지털 ID 카드</title>
+    <style>
+        body {
+            background: #000;
+            font-family: 'Orbitron', monospace;
+            color: #00ffee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        select {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            font-size: 1rem;
+            background: #111;
+            color: #00ffee;
+            border: 1px solid #00ffee;
+            border-radius: 0.5rem;
+        }
+
+        .card-pair {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .id-card,
+        .id-back {
+            border: 2px solid #00ffee;
+            border-radius: 1rem;
+            width: 340px;
+            height: 220px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .id-card.level-1,
+        .id-back.level-1 {
+            background: #111;
+            box-shadow: 0 0 20px #8888ff88;
+        }
+
+        .id-card.level-2,
+        .id-back.level-2 {
+            background: #112233;
+            box-shadow: 0 0 20px #00ffee88;
+        }
+
+        .id-card.level-3,
+        .id-back.level-3 {
+            background: #332200;
+            box-shadow: 0 0 25px #ffcc0088;
+        }
+
+        .id-card.level-4,
+        .id-back.level-4 {
+            background: #330011;
+            box-shadow: 0 0 30px #ff006688;
+        }
+
+        .id-card h2,
+        .id-back h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #ff007f;
+        }
+
+        .id-info,
+        .id-back-info {
+            line-height: 1.42;
+        }
+
+        .qr-box {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 60px;
+            height: 60px;
+        }
+
+        .photo-box {
+            width: 80px;
+            height: 100px;
+            border: 2px solid #00ffee;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 10px #00ffee88;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+    <select id="memberSelect" onchange="changeMember()">
+        <option value="ZIX-013">ZIX-013</option>
+        <option value="KRII-022">KRII-022</option>
+        <option value="NTEK-041">NTEK-041</option>
+    </select>
+
+    <div class="card-pair">
+        <div class="id-card" id="idCard">
+            <div class="photo-box" id="photoBox"></div>
+            <h2 style="position: absolute; top: 2.7rem; right: 2.3rem; margin: 0; font-size: 2.2rem;">PHANTOM RING</h2>
+            <div class="id-info" id="idInfo"></div>
+            <div class="qr-box">
+                <img id="qrCode" src="" alt="QR Code"
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 0.25rem;" />
+            </div>
+        </div>
+
+        <div class="id-back" id="idBack">
+            <h2>비밀 인증 정보</h2>
+            <div class="security-badge" style="
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                width: 60px;
+                height: 60px;
+                background: radial-gradient(circle at center, #00ffee 0%, #003344 80%);
+                border: 2px solid #00ffee;
+                border-radius: 50%;
+                box-shadow: 0 0 12px #00ffee;
+                text-align: center;
+                font-size: 0.6rem;
+                font-weight: bold;
+                color: #000;
+                line-height: 60px;
+                z-index: 1;
+            ">
+                SECURE
+            </div>
+            <div class="id-back-info">
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li>- 허가자만 열람 가능</li>
+                    <li>- 접근 코드: ***</li>
+                    <li>- 백업 서버: 🌐 prism.🔒.net</li>
+                    <li>- 경보 시스템: <span style="color: red">ON</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const memberData = {
+            "ZIX-013": {
+                level: 3,
+                photo: "M_OpVVrO.jpg",
+                qr: "https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=https://phantomring.net/profile/ZIX-013",
+                info: `
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li><strong>코드명:</strong> ZIX-013</li>
+                        <li><strong>등급:</strong> Level 3</li>
+                        <li><strong>피어싱 수:</strong> 5개</li>
+                        <li><strong>팬티 코드:</strong> 𝙿𝚁-𝚂𝚃𝚁𝙸𝙿3</li>
+                        <li><strong>소속:</strong> Phantom Ring HQ</li>
+                    </ul>`
+            },
+            "KRII-022": {
+                level: 2,
+                photo: "케로시 (Keroshi)  22.jpg",
+                qr: "https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=https://phantomring.net/profile/KRII-022",
+                info: `
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li><strong>코드명:</strong> KRII-022</li>
+                        <li><strong>등급:</strong> Level 2</li>
+                        <li><strong>피어싱 수:</strong> 3개</li>
+                        <li><strong>팬티 코드:</strong> 𝙿𝚁-𝙺𝚁𝙸𝙻𝚂2</li>
+                        <li><strong>소속:</strong> Phantom Ring Subnode</li>
+                    </ul>`
+            },
+            "NTEK-041": {
+                level: 4,
+                photo: "플레어릭스 (Flarex) 03.jpg",
+                qr: "https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=https://phantomring.net/profile/NTEK-041",
+                info: `
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li><strong>코드명:</strong> NTEK-041</li>
+                        <li><strong>등급:</strong> Level 4</li>
+                        <li><strong>피어싱 수:</strong> 6개</li>
+                        <li><strong>팬티 코드:</strong> 𝙿𝚁-𝙽𝚃𝙴𝙺𝟺𝙳</li>
+                        <li><strong>소속:</strong> Phantom Ring East Hub</li>
+                    </ul>`
+            }
+        };
+
+        function changeMember() {
+            const selected = document.getElementById("memberSelect").value;
+            const data = memberData[selected];
+
+            document.getElementById("photoBox").style.backgroundImage = `url('${data.photo}')`;
+            document.getElementById("qrCode").src = data.qr;
+            document.getElementById("idInfo").innerHTML = data.info;
+
+            const idCard = document.getElementById("idCard");
+            const idBack = document.getElementById("idBack");
+
+            idCard.className = "id-card";
+            idBack.className = "id-back";
+
+            idCard.classList.add(`level-${data.level}`);
+            idBack.classList.add(`level-${data.level}`);
+        }
+
+        changeMember();
+    </script>
+</body>
+
+</html>

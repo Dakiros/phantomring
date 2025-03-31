@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krii - Phantom Ring</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #e0e0e0;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+    h1 {
+      color: #ff62a5;
+      text-align: center;
+      text-shadow: 0 0 10px #ff62a5;
+      animation: flickerPink 1.8s infinite;
+    }
+    .profile {
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      background-color: #1b1b1b;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(255, 98, 165, 0.4);
+      animation: zoomInBounce 1.2s ease-out;
+    }
+    .quote {
+      font-style: italic;
+      color: #aaa;
+      margin-top: 1rem;
+      text-align: center;
+      animation: pinkFadeIn 2.5s ease forwards;
+    }
+    @keyframes flickerPink {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 0 0 10px #ff62a5, 0 0 20px #ff62a5;
+      }
+      20%, 22%, 24%, 55% {
+        text-shadow: 0 0 2px #ff62a5;
+      }
+    }
+    @keyframes zoomInBounce {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    @keyframes pinkFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Krii</h1>
+  <div class="profile">
+    <p><strong>Role:</strong> Voice of the Club / Creative Storm</p>
+    <p><strong>Personality:</strong> Explosive, emotional, artistic. Krii brings chaotic color and passion to Phantom Ring.</p>
+    <p><strong>Piercings:</strong> Belly button spike, twin nose rings, tail chain piercing.</p>
+    <p><strong>Symbol:</strong> Neon splash over cracked fan.</p>
+    <p><strong>Quote:</strong> "If I can’t cry, I’ll explode. So let me scream in pink."</p>
+    <p class="quote">“나 오늘 울 거야. 근데 그게 나야.”</p>
+  </div>
+</body>
+</html>

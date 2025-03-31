@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Phantom Ring 방송 대본 자동 생성기</title>
+  <style>
+    body {
+      background: #000;
+      color: #00ffee;
+      font-family: 'Orbitron', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #ff007f;
+      margin-bottom: 1rem;
+    }
+
+    select, button {
+      background: #111;
+      color: #00ffee;
+      border: 1px solid #00ffee;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    textarea {
+      background: #111;
+      color: #00ffee;
+      border: 1px solid #00ffee;
+      width: 100%;
+      height: 300px;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      resize: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>📺 Phantom Ring 방송 대본 생성기</h1>
+  <select id="memberSelect">
+    <option value="ZIX-013">ZIX-013</option>
+    <option value="KRII-022">KRII-022</option>
+    <option value="NTEK-041">NTEK-041</option>
+  </select>
+  <button onclick="generateScript()">🎤 대본 생성</button>
+  <textarea id="scriptBox" readonly></textarea>
+
+  <script>
+    const scriptTemplates = {
+      "ZIX-013": `🎙️[오프닝 효과음]\n오늘 방송의 주인공은... ZIX-013!\n레벨 3의 광휘를 뿜는 강철 전사!\n피어싱 5개로 중후한 무게감을 자랑하며,\nPhantom Ring HQ에서 작전의 선봉에 선다!\n\n🔗 팬티 코드: 𝙿𝚁-𝚂𝚃𝚁𝙸𝙿3\n🧠 백도어 침투 미션, 오늘의 이야기 바로 시작합니다!`,
+
+      "KRII-022": `🎙️[전파음 효과 + 기계음]\n안개 속을 달리는 KRII-022 등장!\n레벨 2의 민첩한 스카우트, 피어싱은 3개!\nSubnode의 거점을 맡은 그림자 요원.\n\n🩸 팬티 코드: 𝙿𝚁-𝙺𝚁𝙸𝙻𝚂2\n🚨 임무 개시. 숨겨진 진실을 파헤쳐라!`,
+
+      "NTEK-041": `🎙️[에너지 충전 효과]\n화염처럼 타오르는 전설의 존재, NTEK-041!\n레벨 4의 초강력 방어력과, 피어싱 6개로 압도적 포스!\nEast Hub를 지키는 수호자이자...\nPhantom Ring의 최후 방벽!\n\n🔥 팬티 코드: 𝙿𝚁-𝙽𝚃𝙴𝙺𝟺𝙳\n📡 방송을 통해 그의 실루엣이 밝혀진다!`
+    };
+
+    function generateScript() {
+      const selected = document.getElementById('memberSelect').value;
+      const script = scriptTemplates[selected] || '대본 데이터가 없습니다.';
+      document.getElementById('scriptBox').value = script;
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Phantom Ring :: 멤버 로그인</title>
+  <style>
+    body {
+      background: #000014;
+      color: #00ffee;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .login-box {
+      border: 2px solid #00ffee;
+      padding: 2rem;
+      border-radius: 1rem;
+      background: rgba(0, 0, 0, 0.85);
+      box-shadow: 0 0 20px #00ffee55;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h2 {
+      color: #ff00cc;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #00ffee;
+      color: #000;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>🔐 멤버 전용 로그인</h2>
+    <form id="loginForm">
+      <input type="text" placeholder="ID" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">접속</button>
+    </form>
+  </div>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const id = document.querySelector('input[type="text"]').value.trim();
+    const pw = document.querySelector('input[type="password"]').value.trim();
+
+    if (!id || !pw) {
+      alert("아이디와 비밀번호를 모두 입력해 주세요.");
+      return;
+    }
+
+    alert("접속 요청이 전송되었습니다.");
+  });
+</script>
+</body>
+</html>

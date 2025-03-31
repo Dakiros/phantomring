@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zix - Phantom Ring</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #e0e0e0;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+    h1 {
+      color: #ff007f;
+      text-align: center;
+      text-shadow: 0 0 10px #ff007f;
+      animation: pulseShadow 2s infinite;
+    }
+    .profile {
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      background-color: #1b1b1b;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+      animation: riseFadeIn 1.4s ease-out;
+    }
+    .quote {
+      font-style: italic;
+      color: #aaa;
+      margin-top: 1rem;
+      text-align: center;
+      animation: slowAppear 2.5s ease forwards;
+    }
+    @keyframes pulseShadow {
+      0%, 100% {
+        text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
+      }
+      50% {
+        text-shadow: 0 0 5px #ff007f, 0 0 30px #ff007f;
+      }
+    }
+    @keyframes riseFadeIn {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slowAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Zix</h1>
+  <div class="profile">
+    <p><strong>Role:</strong> Strategist & Founder</p>
+    <p><strong>Personality:</strong> Cold, calculating, and precise. Zix leads Phantom Ring with logic and order, even in the chaos.</p>
+    <p><strong>Piercings:</strong> Double tongue ring, left horn ring, eyebrow bar.</p>
+    <p><strong>Symbol:</strong> Broken black circle with crimson center dot.</p>
+    <p><strong>Quote:</strong> "Disorder is not freedom. It’s just noise without purpose."</p>
+    <p class="quote">“질서 없는 자유는 쇠사슬일 뿐이다.”</p>
+  </div>
+</body>
+</html>

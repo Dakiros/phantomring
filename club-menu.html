@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>클럽 내부 메뉴</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #0d0d0d;
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffe1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #00f9ff;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 40px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00ffe1;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #00ffe1;
+            color: #000;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ffe1;
+        }
+
+        .npc {
+            margin-top: 60px;
+            width: 180px;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        #npc-dialog {
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            max-width: 250px;
+            display: none;
+            box-shadow: 0 0 10px #00f9ff;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CODE-FRAGMENT 내부에 오신 것을 환영합니다!</h1>
+
+    <div class="menu-grid">
+        <div class="menu-item" onclick="location.href='panty-vault.html'">🩲 팬티 보관함</div>
+        <div class="menu-item" onclick="location.href='members.html'">🐉 회원 명부</div>
+        <div class="menu-item" onclick="location.href='mascot-room.html'">🎭 마스코트 관리실</div>
+    </div>
+
+    <!-- 🧙‍♂️ NPC 캐릭터 안내 블록 -->
+    <div style="position: relative; display: inline-block;">
+        <img class="npc" src="npc-dragon.png" alt="안내 드래곤" onclick="talkToNpc()">
+        <div id="npc-dialog" style="
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.85);
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        max-width: 250px;
+        width: 220px;
+        white-space: normal;
+        word-break: keep-all;
+        text-align: center;
+        display: none;
+        box-shadow: 0 0 10px #00f9ff;
+        z-index: 10;
+      ">
+        </div>
+        <div style="margin-top: 8px; font-weight: bold;">🧙‍♂️ 제트 (ZET)</div>
+    </div>
+
+    <script>
+        const npcLines = [
+            "😄 어서 와! 난 이 클럽의 안내 담당 ZET!",
+            "🤔 메뉴에서 네가 보고 싶은 걸 골라봐!",
+            "😏 팬티 보관함엔 아주 특이한 취향도 있어…"
+        ];
+
+        function talkToNpc() {
+            const dialog = document.getElementById('npc-dialog');
+            dialog.textContent = npcLines[Math.floor(Math.random() * npcLines.length)];
+            dialog.style.display = 'block';
+
+            setTimeout(() => {
+                dialog.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

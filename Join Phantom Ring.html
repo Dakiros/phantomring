@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Phantom Ring</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #e0e0e0;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #ff007f;
+      text-shadow: 0 0 10px #ff007f;
+    }
+    form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #1b1b1b;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+    button {
+      background-color: #ff007f;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    button:hover {
+      background-color: #ff62a5;
+      transform: scale(1.05);
+    }
+  </style>
+  <script>
+  function validateForm() {
+    const codename = document.getElementById('codename').value.trim();
+    const age = document.getElementById('age').value;
+    const piercing = document.getElementById('piercing').value.trim();
+    const fantrance = document.getElementById('fantrance').value.trim();
+    const mission = document.getElementById('mission').value;
+
+    if (!codename || !age || !piercing || !fantrance || !mission) {
+      alert('정보기입요망');
+      return false;
+    } else {
+      alert('가입서전송완료!');
+
+      const formData = {
+        codename,
+        age,
+        piercing,
+        fantrance,
+        mission
+      };
+      localStorage.setItem('phantomApplication', JSON.stringify(formData));
+
+      // 다운로드용 JSON 파일 생성 및 저장
+      const blob = new Blob([JSON.stringify(formData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'phantom_application.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      setTimeout(() => { window.open('', '_self'); window.close(); }, 300);
+      return false;
+    }
+  }
+</script>
+</head>
+<body>
+  <h1>Apply to Join Phantom Ring</h1>
+  <form onsubmit="return validateForm();">
+    <label for="codename">Codename (No real names allowed)</label>
+    <input type="text" id="codename" name="codename" required>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" min="7" max="14" required>
+
+    <label for="piercing">Describe your piercing(s)</label>
+    <textarea id="piercing" name="piercing" rows="3" required></textarea>
+
+    <label for="fantrance">What does your favorite pair of fantrance say about you?</label>
+    <textarea id="fantrance" name="fantrance" rows="3" required></textarea>
+
+    <label for="mission">Are you ready to walk the Shadow Mission alone?</label>
+    <select id="mission" name="mission" required>
+      <option value="">-- Choose an option --</option>
+      <option value="yes">Yes – I was born for this</option>
+      <option value="maybe">Maybe – but I want to try</option>
+      <option value="no">No – not yet</option>
+    </select>
+
+    <button type="submit">Submit Application</button>
+  </form>
+  <hr style="margin-top: 4rem; border-color: #333;">
+  <h2 style="text-align: center; color: #ff007f;">📂 불러오기 (저장된 가입서 보기)</h2>
+  <div style="max-width: 600px; margin: 1rem auto; background: #1b1b1b; padding: 1rem; border-radius: 0.5rem;">
+    <input type="file" id="jsonFile" accept="application/json" style="margin-bottom: 1rem;" />
+    <pre id="output" style="white-space: pre-wrap; background: #111; padding: 1rem; border-radius: 0.5rem; color: #90f5ff;"></pre>
+  </div>
+  <script>
+    document.getElementById('jsonFile').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const data = JSON.parse(e.target.result);
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+          } catch (err) {
+            document.getElementById('output').textContent = '⚠️ JSON 파일이 유효하지 않습니다';
+          }
+        };
+        reader.readAsText(file);
+      }
+    });
+  </script>
+  <div id="approval-screen" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000ee;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
+    animation: fadeIn 2s ease forwards;
+  ">
+    <h1 style="color: #00ffcc; font-size: 3rem; text-shadow: 0 0 20px #00ffff; animation: neonGlow 2s infinite alternate;">
+      ✅ ACCESS GRANTED
+    </h1>
+    <p style="color: #888; font-size: 1.2rem;">Phantom Ring welcomes you...</p>
+  </div>
+
+  <script>
+    function showApprovalAnimation() {
+      const screen = document.getElementById('approval-screen');
+      screen.style.display = 'flex';
+      setTimeout(() => {
+        screen.style.display = 'none';
+      }, 3000);
+    }
+
+    // 실행 시점 조정
+    if (localStorage.getItem('phantomApplication')) {
+      setTimeout(() => {
+        showApprovalAnimation();
+      }, 100);
+    }
+  </script>
+
+  <style>
+    @keyframes neonGlow {
+      0% { text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
+      100% { text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</body>
+</html>

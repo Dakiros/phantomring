@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zix's Strategy Notes</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #00ffee;
+      font-family: 'Orbitron', monospace;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #ff007f;
+      text-shadow: 0 0 10px #ff007f;
+    }
+    .note {
+      background-color: #1a1a1a;
+      border-left: 4px solid #00ffee;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0.5rem;
+      position: relative;
+    }
+    .note:hover .tooltip {
+      display: block;
+    }
+    .tooltip {
+      display: none;
+      position: absolute;
+      left: 1rem;
+      top: 100%;
+      background: #222;
+      color: #fff;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 10px #00ffee88;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      width: 90%; white-space: pre-wrap;
+      z-index: 9999;
+    }
+    .note[data-level="2"] {
+      border-left-color: #ffaa00;
+    }
+    .note[data-level="3"] {
+      border-left-color: #ff3300;
+    }
+    .note[data-level="4"] {
+      border-left-color: #9900ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zix's Strategic Archive</h1>
+
+  <div style="margin: 2rem 0;">
+    <h2 style="color:#00ffee; text-align:center;">🧠 전략 시뮬레이터</h2>
+    <div style="max-width: 600px; margin: 0 auto; background: #1a1a1a; padding: 1rem; border-radius: 1rem;">
+      <label for="situation">상황 선택:</label>
+      <select id="situation" onchange="simulateStrategy()" style="width: 100%; padding: 0.5rem; background: #111; color: #00ffee; border: 1px solid #00ffee; margin-bottom: 1rem;">
+        <option value="">-- 시나리오 선택 --</option>
+        <option value="tunnel">터널 감시 회피</option>
+        <option value="emotion">감정 흔들림 통제</option>
+        <option value="paint">비노출 낙서 전략</option>
+      </select>
+      <div id="simResult" style="color:#fff; background:#111; padding:1rem; border-radius:0.5rem; box-shadow:0 0 10px #00ffee88; margin-top:1rem;">
+        <p style="margin:0;"><strong>전략 분석 결과가 여기에 표시됩니다.</strong></p>
+        <pre id="simMap" style="display:none; text-align: left; font-size: 0.8rem; line-height: 1.2; margin-top:1rem; background:#000; color:#00ffee; padding:1rem; border-radius:0.5rem; overflow-x: auto;"></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-C1] : "Red Signal at 03:13 = Movement near Tunnel D"
+    <div class="tooltip">터널 D 근처에 움직임이 감지되었음을 암호화한 문장</div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-X7] : "Silent codes must override emotional pushbacks"
+    <div class="tooltip">감정적 반응보다 냉정한 판단이 우선됨을 뜻함</div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-K0] : "Paint only where the light can't reach"
+    <div class="tooltip">노출되지 않는 곳에만 흔적을 남기라는 전략</div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-E9] : "They follow noise. You lead with silence."
+    <div class="tooltip">적은 소음을 따라오고, 넌 침묵으로 길을 인도하라</div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-B2] : "Never touch the wall twice in the same night"
+    <div class="tooltip">패턴을 반복하지 말라는 의미. 감시망을 피하는 기술</div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-H3] : "If you're seen, become the shadow that saw you"
+    <div class="tooltip">정체가 드러나면 관찰자가 되라는 전술적 반전</div>
+  </div>
+
+  <div class="note" data-level="2">
+    [Z-V6] : "Silence isn't absence. It's precision."
+    <div class="tooltip">침묵은 부재가 아니라 정밀한 존재 방식임을 뜻함</div>
+  </div>
+
+  <div class="note" data-level="4">
+    [Z-L0] : "Level 4 Insight unlocked"
+    <div class="tooltip">해당 전략은 상급 멤버만 열람 가능 - 해석 생략</div>
+  </div>
+
+  <script>
+    function unlockSecret() {
+      const input = document.getElementById("codeInput").value;
+      const note = document.getElementById("secretNote");
+      if (input === "Z-PRIME") {
+        note.style.display = 'block';
+      } else {
+        alert("접근 거부: 코드 불일치");
+      }
+    }
+
+    const zixTheme = new Audio('KKOMJIROCK BAND  SUIT UP MV.mp3');
+    const kriiTheme = new Audio('KKOMJIROCK BAND  SUIT UP MV.mp3');
+    const ntekTheme = new Audio('KKOMJIROCK BAND  SUIT UP MV.mp3');
+    zixTheme.loop = true;
+    kriiTheme.loop = true;
+    ntekTheme.loop = true;
+
+    function stopAllThemes() {
+      zixTheme.pause();
+      kriiTheme.pause();
+      ntekTheme.pause();
+    }
+
+    function simulateStrategy() {
+      stopAllThemes();
+      const value = document.getElementById("situation").value;
+      const result = document.getElementById("simResult");
+      const map = document.getElementById("simMap");
+      if (value === "tunnel") {
+        zixTheme.play();
+        result.querySelector('p').textContent = "[Z-C1] 전략 적용됨: 감시를 유도 후 우회로 이동";
+        map.style.display = 'block';
+        map.textContent = `
+╔══════════════════════════════╗
+║ ████ 감시 카메라 ████       ║
+║     ↓↓   감시선   ↓↓        ║
+║ [A구역]───────[B구역]       ║
+║     │               │        ║
+║   (우회 터널 진입)          ║
+║     │               │        ║
+║ [C구역]───────[D : 목표]   ║
+╚══════════════════════════════╝
+        `;
+      } else if (value === "emotion") {
+        kriiTheme.play();
+        result.querySelector('p').textContent = "[Z-X7] 전략 적용됨: 감정 억제 후 데이터 기반 반응";
+        map.style.display = 'block';
+        map.textContent = `
+┌────────────────────────────┐
+│ 감정 레벨 📈📉              │
+│                            │
+│  🔺 충동 ▶ 필터링 ▶ 냉정 🧊 │
+│         ▼         ▲       │
+│   분노 로그      판단 로직 │
+└────────────────────────────┘
+        `;
+      } else if (value === "paint") {
+        ntekTheme.play();
+        result.querySelector('p').textContent = "[Z-K0] 전략 적용됨: 그림자는 메시지를 보관한다.";
+        map.style.display = 'block';
+        map.textContent = `
+┌────────────────────────────┐
+│    🌒 어둠 속 벽면 구조     │
+│                            │
+│ ████████ ← 페인트 코드 삽입 │
+│                            │
+│ (낙서 위치: CCTV 사각지대) │
+└────────────────────────────┘
+        `;
+      } else {
+        result.querySelector('p').textContent = "전략 분석 결과가 여기에 표시됩니다.";
+        map.style.display = 'none';
+        map.textContent = "";
+      }
+    }
+  </script>
+  <hr style="margin-top: 4rem; border-color: #00ffee;">
+  <h2 style="color:#00ffee; text-align:center;">🎧 Zix 테마 사운드</h2>
+  <div style="text-align:center; margin-bottom: 2rem;">
+    <audio controls autoplay loop>
+      <source src="KKOMJIROCK BAND  SUIT UP MV.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <p style="color:#888; font-size:0.9rem;">🎵 Track: SUIT UP – KKOMJIROCK BAND</p>
+  </div>
+
+  <h2 style="color:#ffaa00; text-align:center;">🎧 Krii & N-Tek 테마 사운드</h2>
+  <div style="text-align:center; margin-bottom: 2rem;">
+    <h3 style="color:#ff62a5;">Krii의 Chaos Pop Theme</h3>
+    <audio controls loop>
+      <source src="KKOMJIROCK BAND  SUIT UP MV.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <p style="color:#888; font-size:0.9rem;">🎵 Track: SUIT UP – KKOMJIROCK BAND</p>
+    <br>
+    <h3 style="color:#00ffff;">N-Tek의 Signal Sync Theme</h3>
+    <audio controls loop>
+      <source src="KKOMJIROCK BAND  SUIT UP MV.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <p style="color:#888; font-size:0.9rem;">🎵 Track: SUIT UP – KKOMJIROCK BAND</p>
+  </div>
+</body>
+</html>

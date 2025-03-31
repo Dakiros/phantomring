@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>CODE-FRAGMENT 입장</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #0f0f0f, #000);
+      color: #00ffe1;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00f9ff, 0 0 20px #7f00ff;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ff66cc;
+      margin-bottom: 30px;
+    }
+
+    .enter-btn {
+      padding: 12px 28px;
+      font-size: 1rem;
+      color: #000;
+      background: #00f9ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00f9ff, 0 0 20px #7f00ff;
+      transition: all 0.3s ease;
+    }
+
+    .enter-btn:hover {
+      background: #7f00ff;
+      color: #fff;
+      box-shadow: 0 0 15px #ff00c8, 0 0 30px #00ffe1;
+    }
+  </style>
+</head>
+<body>
+  <h1>✔️ 입장 성공!</h1>
+  <p>CODE-FRAGMENT 클럽 내부에 도착했습니다.</p>
+  <p>이제 너도 맨발 + 팬티 + 피어싱 동료! 👣</p>
+  <button class="enter-btn" onclick="location.href='club-menu.html'">클럽 내부 보기</button>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Phantom Ring :: 메인 허브</title>
+  <style>
+    body {
+      background: #000;
+      color: #00ffee;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .container {
+      border: 2px solid #00ffee;
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+      background: rgba(0,0,0,0.8);
+      box-shadow: 0 0 20px #00ffee88;
+    }
+
+    .fingerprint-area {
+      padding: 0.5rem;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      margin-bottom: 2rem;
+      width: 120px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .fingerprint-scan {
+      background: url('free-icon-fingerprint-scan-11088331.png') center center / contain no-repeat;
+      width: 100px;
+      height: 100px;
+      margin: auto;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    .auth-status {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .broadcast-section {
+      display: none;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .member-grid {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .member-card {
+      border: 1px solid #00ffee99;
+      padding: 1rem;
+      width: 180px;
+      background: #111;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .member-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00ffee66;
+    }
+
+    .member-name {
+      font-weight: bold;
+      color: #ff00cc;
+    }
+      .hud-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-radial-gradient(circle at center, rgba(0, 255, 255, 0.03) 1px, transparent 3px);
+      animation: scanMove 8s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes scanMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 120px 120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hud-overlay"></div>
+  <div class="container">
+    <h2>🧬 Phantom Ring :: 클럽 인터페이스</h2>
+
+    <div class="fingerprint-area" id="authTrigger">
+      <div class="fingerprint-scan"></div>
+      <div class="auth-status" id="authStatus">지문을 스캔하려면 터치하세요</div>
+    </div>
+
+    <div class="broadcast-section" id="broadcastUI">
+      <div class="member-grid">
+        <div class="member-card" onclick="window.open('profile-NTEK-041.html', '_blank')">
+          <img src="ntek.png" alt="NTEK-041" width="50%">
+          <div class="member-name">NTEK-041</div>
+          <div>Level 4</div>
+        </div>
+        <div class="member-card" onclick="window.open('profile-ZIX-013.html', '_blank')">
+          <img src="ZIX.png" alt="ZIX-013" width="50%">
+          <div class="member-name">ZIX-013</div>
+          <div>Level 3</div>
+        </div>
+        <div class="member-card" onclick="window.open('profile-KRII-022.html', '_blank')">
+          <img src="KRII.png" alt="KRII-022" width="50%">
+          <div class="member-name">KRII-022</div>
+          <div>Level 2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 멤버 카드 랜덤 정렬
+    window.addEventListener("DOMContentLoaded", () => {
+      const grid = document.querySelector(".member-grid");
+      const cards = Array.from(grid.children);
+      while (grid.firstChild) grid.removeChild(grid.firstChild);
+      cards.sort(() => Math.random() - 0.5);
+      cards.forEach(card => grid.appendChild(card));
+    });
+    const authTrigger = document.getElementById("authTrigger");
+    const broadcastUI = document.getElementById("broadcastUI");
+
+    authTrigger.addEventListener("click", () => {
+      const authStatus = document.getElementById("authStatus");
+      authStatus.innerText = "🧬 인증 중...";
+      authTrigger.style.pointerEvents = "none";
+
+      setTimeout(() => {
+        const audio = new Audio("zix-welcome.mp3");
+        audio.play();
+
+        const welcomeMsg = document.createElement("div");
+        welcomeMsg.innerText = "🧠 コアシステム起動。オペレーターZIX-013、ようこそ。";
+        welcomeMsg.style.marginTop = "1rem";
+        welcomeMsg.style.fontStyle = "italic";
+        welcomeMsg.style.color = "#00ffeecc";
+        document.querySelector(".container").appendChild(welcomeMsg);
+        
+        broadcastUI.style.display = "block";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
